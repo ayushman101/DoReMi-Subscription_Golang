@@ -14,6 +14,8 @@ const (
 	PRINT string = "PRINT_RENEWAL_DETAILS"
 )
 
+var user User
+
 func main() {
 	cliArgs := os.Args[1:]
 

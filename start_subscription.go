@@ -2,27 +2,31 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
+	"time"
 )
 
 func StartSubscriptionHandler(argList []string) {
 
 	date := strings.Split(argList[1], "-")
-	fmt.Println(date)
 
-	day, _ := strconv.Atoi(date[0])
-	month, _ := strconv.Atoi(date[1])
-	year, _ := strconv.Atoi(date[2])
+	// day, _ := strconv.Atoi(date[0])
+	// month, _ := strconv.Atoi(date[1])
+	// year, _ := strconv.Atoi(date[2])
 
+	// startDate := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
+	startDate, err := time.Parse(time.DateOnly, date[2]+"-"+date[1]+"-"+date[0])
+
+	if err != nil {
+		fmt.Println("INVALID_DATE")
+		return
+	}
 	//TODO: validate the date
 
+	// fmt.Println(startDate)
+
 	user = User{
-		StartDate: Date{
-			uint8(day),
-			uint8(month),
-			uint16(year),
-		},
+		StartDate: startDate,
 		Music: Subscription{
 			Category: MUSIC,
 			Plan:     NONE,
@@ -32,7 +36,7 @@ func StartSubscriptionHandler(argList []string) {
 			Plan:     NONE,
 		},
 		Podcast: Subscription{
-			Category: VIDEO,
+			Category: PODCAST,
 			Plan:     NONE,
 		},
 		TopUp: TopUp{
@@ -41,5 +45,5 @@ func StartSubscriptionHandler(argList []string) {
 		},
 	}
 
-	fmt.Println(user)
+	// fmt.Println(user)
 }

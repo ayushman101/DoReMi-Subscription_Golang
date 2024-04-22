@@ -1,12 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
-type Date struct {
-	Day   uint8
-	Month uint8
-	Year  uint16
-}
+// type Date struct {
+// 	Day   uint8
+// 	Month uint8
+// 	Year  uint16
+// }
 
 type Category uint8
 
@@ -82,7 +85,7 @@ type Subscription struct {
 	Plan
 	Months       uint8
 	Amount       uint32
-	Renewal_Date Date
+	Renewal_Date time.Time
 }
 
 //TODO :: COMPLETE THIS FUNCTION
@@ -137,7 +140,7 @@ type TopUp struct {
 }
 
 type User struct {
-	StartDate Date
+	StartDate time.Time
 	Music     Subscription
 	Video     Subscription
 	Podcast   Subscription

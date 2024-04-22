@@ -5,12 +5,6 @@ import (
 	"time"
 )
 
-// type Date struct {
-// 	Day   uint8
-// 	Month uint8
-// 	Year  uint16
-// }
-
 type Category uint8
 
 const (
@@ -29,19 +23,6 @@ func (c Category) String() string {
 		return "PODCAST"
 	default:
 		return "UNKNOWN"
-	}
-}
-
-func getCategoryFromString(str string) Category {
-	switch str {
-	case "MUSIC":
-		return MUSIC
-	case "VIDEO":
-		return VIDEO
-	case "PODCAST":
-		return PODCAST
-	default:
-		return MUSIC
 	}
 }
 
@@ -67,19 +48,6 @@ func (p Plan) String() string {
 	}
 }
 
-func getPlanFromString(str string) Plan {
-	switch str {
-	case "FREE":
-		return FREE
-	case "PERSONAL":
-		return PERSONAL
-	case "PREMIUM":
-		return PREMIUM
-	default:
-		return NONE
-	}
-}
-
 type Subscription struct {
 	Category
 	Plan
@@ -90,26 +58,10 @@ type Subscription struct {
 
 //TODO :: COMPLETE THIS FUNCTION
 
-// func (sub *Subscription) CalRenewableDate(startDate Date) {
-
-// 	sub.Renewal_Date.Month = (startDate.Month + sub.Months) % 12
-
-// 	if startDate.Month+sub.Months > 12 {
-// 		sub.Renewal_Date.Year = startDate.Year + 1
-// 	}
-
-// }
-
-func getMonthsFromPlan(p Plan) uint8 {
-	switch p {
-	case FREE:
-		return uint8(1)
-	case PERSONAL:
-		return uint8(1)
-	case PREMIUM:
-		return uint8(3)
-	default:
-		return uint8(0)
+func getNewSubscription(cat Category, pl Plan) Subscription {
+	return Subscription{
+		Category: cat,
+		Plan:     pl,
 	}
 }
 
@@ -134,9 +86,39 @@ func getAmountForSubscription(p Plan, c Category) uint32 {
 	return uint32(0)
 }
 
+type TopUpPlans uint8
+
+const (
+	DEFAULT TopUpPlans = iota
+	FOUR_DEVICE
+	TEN_DEVICE
+)
+
+func (t TopUpPlans) String() string {
+	switch t {
+	case FOUR_DEVICE:
+		return "FOUR_DEVICE"
+	case TEN_DEVICE:
+		return "TEN_DEVICE"
+	default:
+		return "DEFAULT"
+	}
+}
+
 type TopUp struct {
+	TopUpPlans
 	Months  uint8 // default to 1
 	Devices uint8 // can be 1, 4, or 8 and default to 1
+	Amount  uint16
+}
+
+func getNewDefaultTopUp(tup TopUpPlans, months uint8, devices uint8, amount uint16) TopUp {
+	return TopUp{
+		TopUpPlans: tup,
+		Months:     months,
+		Devices:    devices,
+		Amount:     amount,
+	}
 }
 
 type User struct {
@@ -145,6 +127,22 @@ type User struct {
 	Video     Subscription
 	Podcast   Subscription
 	TopUp
+}
+
+func (u User) printRenewalAmount() {
+	fmt.Printf("RENEWAL_AMOUNT ")
+	amount := user.Music.Amount + user.Podcast.Amount + user.Video.Amount + uint32(user.TopUp.Amount)
+	fmt.Println(amount)
+}
+
+func getNewDefaultUser(startDate time.Time) User {
+	return User{
+		StartDate: startDate,
+		Music:     getNewSubscription(MUSIC, NONE),
+		Video:     getNewSubscription(VIDEO, NONE),
+		Podcast:   getNewSubscription(PODCAST, NONE),
+		TopUp:     getNewDefaultTopUp(DEFAULT, 1, 1, 0),
+	}
 }
 
 func (user *User) AddSubscription(sub Subscription) {

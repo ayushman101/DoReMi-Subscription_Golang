@@ -9,17 +9,17 @@ func addSubscriptionHandler(argList []string) {
 		return
 	}
 
-	plan := getPlanFromString(argList[2])
-	category := getCategoryFromString(argList[1])
-	months := getMonthsFromPlan(plan)
-	endDate := user.StartDate.AddDate(0, int(months), -10)
-
 	sub := Subscription{
-		Category:     category,
-		Plan:         plan,
-		Months:       months,
-		Amount:       getAmountForSubscription(plan, category),
-		Renewal_Date: endDate,
+
+		Category: categoryMap[argList[1]],
+
+		Plan: planMap[argList[2]],
+
+		Months: planMonthsMap[planMap[argList[2]].String()],
+
+		Amount: getAmountForSubscription(planMap[argList[2]], categoryMap[argList[1]]),
+
+		Renewal_Date: user.StartDate.AddDate(0, int(planMonthsMap[planMap[argList[2]].String()]), -10),
 	}
 
 	user.AddSubscription(sub)

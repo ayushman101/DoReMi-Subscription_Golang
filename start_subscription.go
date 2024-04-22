@@ -18,25 +18,7 @@ func StartSubscriptionHandler(argList []string) {
 		return
 	}
 
-	user = User{
-		StartDate: startDate,
-		Music: Subscription{
-			Category: MUSIC,
-			Plan:     NONE,
-		},
-		Video: Subscription{
-			Category: VIDEO,
-			Plan:     NONE,
-		},
-		Podcast: Subscription{
-			Category: PODCAST,
-			Plan:     NONE,
-		},
-		TopUp: TopUp{
-			Months:  1,
-			Devices: 1,
-		},
-	}
+	user = getNewDefaultUser(startDate)
 
 	// fmt.Println(user)
 }

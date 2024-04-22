@@ -15,6 +15,8 @@ func StartSubscriptionHandler(argList []string) {
 	month, _ := strconv.Atoi(date[1])
 	year, _ := strconv.Atoi(date[2])
 
+	//TODO: validate the date
+
 	user = User{
 		StartDate: Date{
 			uint8(day),

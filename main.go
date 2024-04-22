@@ -51,7 +51,7 @@ func switchCommand(argList []string) {
 		addSubscriptionHandler(argList)
 	case PRINT:
 		//print handler
-		printDetailsHandler(argList)
+		printDetailsHandler()
 	case TOPUP:
 		//add topup handler
 		addTopUpHandler(argList)

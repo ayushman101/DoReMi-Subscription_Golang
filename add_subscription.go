@@ -5,7 +5,7 @@ import "fmt"
 func addSubscriptionHandler(argList []string) {
 
 	if user.StartDate.Year() == 1 {
-		fmt.Println("INVALID DATE")
+		fmt.Println("ADD_SUBSCRIPTION_FAILED INVALID_DATE")
 		return
 	}
 
@@ -24,5 +24,4 @@ func addSubscriptionHandler(argList []string) {
 
 	user.AddSubscription(sub)
 
-	// fmt.Println(user)
 }

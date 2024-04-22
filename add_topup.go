@@ -6,6 +6,11 @@ import (
 )
 
 func addTopUpHandler(argList []string) {
+	if user.StartDate.Year() == 1 {
+		fmt.Println("ADD_TOPUP_FAILED INVALID_DATE")
+		return
+	}
+
 	if user.TopUpPlans != DEFAULT {
 		fmt.Println("ADD_TOPUP_FAILED DUPLICATE_TOPUP")
 	}

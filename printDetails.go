@@ -22,3 +22,9 @@ func printSub(sub Subscription) {
 	}
 
 }
+
+func (u User) printRenewalAmount() {
+	fmt.Printf("RENEWAL_AMOUNT ")
+	amount := user.Music.Amount + user.Podcast.Amount + user.Video.Amount + uint32(user.TopUp.Amount)
+	fmt.Println(amount)
+}

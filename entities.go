@@ -34,3 +34,15 @@ func validateAndAddSub(sub Subscription, userSub *Subscription) {
 	}
 
 }
+
+func getTestUser() User {
+	startDate, _ := time.Parse("2006-01-02", "2006-01-02")
+
+	return User{
+		StartDate: startDate,
+		Music:     getNewSubscription(MUSIC, FREE),
+		Video:     getNewSubscription(VIDEO, PREMIUM),
+		Podcast:   getNewSubscription(PODCAST, PERSONAL),
+		TopUp:     getNewDefaultTopUp(TEN_DEVICE, 1, 4, 400),
+	}
+}
